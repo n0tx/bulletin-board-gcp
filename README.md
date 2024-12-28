@@ -1,4 +1,9 @@
-# Bulletin Board
+# Bulletin Board Deployment
+
+## Application Detail
+```
+https://github.com/n0tx/bulletin-board
+```
 
 - Java 17
 - Spring Boot
