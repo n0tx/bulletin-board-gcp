@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="eng"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{fragments/main_layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="card o-hidden border-o shadow-lg my-5">
+			<div class="card-body p-0">
+				<div class="row">
+
+					<div class="col-lg-12">
+						<div class="p-5">
+							<div class="text-left">
+								<h1 class="h4 text-gray-900 mb-5">New Post</h1>
+							</div>
+							<form method="POST" th:action="@{/post/new}"
+								th:object="${postForm}">
+								<div class="form-group row">
+									<div class="col-sm-2">Title</div>
+									<div class="col-sm-8 mb-3 mb-sm-0">
+										<input name="title" type="text" th:field="*{title}"
+											class="form-control form-control-user"> <small
+											class="text-danger" th:if="${#fields.hasErrors('title')}"
+											th:errors="*{title}"></small>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-2">Author</div>
+									<div class="col-sm-8 mb-3 mb-sm-0">
+										<input name="author" type="text" th:field="*{author}"
+											class="form-control form-control-user"> <small
+											class="text-danger" th:if="${#fields.hasErrors('author')}"
+											th:errors="*{author}"></small>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-2">Password</div>
+									<div class="col-sm-8 mb-3 mb-sm-0">
+										<input name="author" type="password" th:field="*{password}"
+											   class="form-control form-control-user"> <small
+											class="text-danger" th:if="${#fields.hasErrors('password')}"
+											th:errors="*{password}"></small>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-2">Content</div>
+									<div class="col-sm-8 mb-3 mb-sm-0">
+										<textarea
+												id="content" name="content"
+												rows="8" cols="70" class="form-control form-control-user"
+												th:field="*{content}" placeholder="Enter your content here">
+										</textarea>
+										<small
+												class="text-danger" th:if="${#fields.hasErrors('content')}"
+												th:errors="*{content}">
+
+										</small>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-8 mb-sm-0">
+										<input type="submit" value="Submit" class="btn btn-success">
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

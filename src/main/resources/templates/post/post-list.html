@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="eng"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{fragments/main_layout}">
+<body>
+	<div layout:fragment="content">
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h5 class="m-0 font-weight-bold text-primary">Post List</h5>
+			</div>
+			<div class="card-body py-2">
+				<a th:href="@{/post/new}" class="btn btn-success" role="button">Add Post</a>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<div id="dataTable_wrapper"
+						class="dataTables_wrapper dt-bootstrap4">
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table table-bordered dataTable small" id="dataTable"
+									role="grid" aria-describedby="dataTable_info"
+									style="width: 100%;">
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>Title</th>
+											<th>Content</th>
+											<th>Author</th>
+											<th>Viewers</th>
+											<th>Created Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="post:${posts.results}">
+											<td th:text="${post.id}"></td>
+											<td>
+												<form th:action="@{/post/detail/{id}(id=${post.id})}" method="post">
+													<input type="hidden" name="_method" value="patch"/>
+													<a href="javascript:void(0);" onclick="this.parentNode.submit();" th:text="${post.title}">
+													</a>
+												</form>
+											</td>
+											<td th:text="${post.content}"></td>
+											<td th:text="${post.author}"></td>
+											<td th:text="${post.viewers}"></td>
+											<td th:text="${#temporals.format(post.createdAt, 'dd-MM-yyyy')}"></td>
+											<td>
+												<div>
+													<div class="form-group row">
+														<div class="col-sm-3">
+															<form th:action="@{/post/update/{id}(id=${post.id})}" method="get">
+																<button type="submit" class="btn btn-warning">Edit</button>
+															</form>
+														</div>
+
+														<div class="col-sm-8 mb-3 mb-sm-0">
+															<form th:action="@{/post/delete/{id}(id=${post.id})}" method="get">
+																<button type="submit" class="btn btn-danger">Delete</button>
+															</form>
+
+
+														</div>
+
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-8"></div>
+							<div  class="col-sm-4">
+								<div th:if="${posts.pages > 0}" class="card-body">
+									<nav aria-label="Page navigation example">
+									   <ul class="pagination">
+      								  		<li class="page-item" th:classappend="${posts.page < 1 ? 'disabled' : ''}">
+                        						<a class="page-link" th:href="@{/(page=${posts.page-1})}" tabindex="-1" aria-label="Previous">
+                        							<span aria-hidden="true">&laquo;</span>
+        											<span class="sr-only" th:text="Previous"></span>
+                        						</a>
+                        					</li>
+      								  		<th:block th:each="pageNumber : ${#numbers.sequence( 0, posts.pages - 1, 1)}">
+											  	<li  class="page-item" th:classappend="${posts.page == pageNumber ? 'active' : ''}">
+											  		<a class="page-link" th:href="@{/(page=${pageNumber})}" th:text="${pageNumber+1}"></a>
+											  	</li>
+											</th:block>
+											<li class="page-item" th:classappend="${posts.page == posts.pages-1 ? 'disabled' : ''}">
+                        						<a class="page-link" th:href="@{/(page=${posts.page+1})}" aria-label="Next">
+                        							<span aria-hidden="true">&raquo;</span>
+                        							<span class="sr-only" th:text="Next"></span>
+                        						</a>
+                        					</li>
+									  </ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
