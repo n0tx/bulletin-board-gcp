@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bulletin-board-container
-          image: asia-southeast2-docker.pkg.dev/springboot-githubactions-gke/my-repository/bulletin_board:v1.0
+          image: us-central1-docker.pkg.dev/springboot-githubactions-gke/bulletin-board-repository/bulletin_board:v1.0
 
           ports:
             - containerPort: 8080
