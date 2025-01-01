@@ -1,27 +1,37 @@
 steps:
-  # Step 1: Build the Application
-  - name: 'maven:3-eclipse-temurin-17-alpine'
-    id: 'Build application'
-    entrypoint: 'mvn'
-    args: [ "package", "-Dmaven.test.skip=true" ]
+  # Step 1: Set up Maven and Build application
+  - name: 'gcr.io/cloud-builders/mvn'
+    args:
+      - 'clean'
+      - 'package'
+      - '-DskipTests=true'
 
-  # Step 2: Build the Docker image for the Go application
+  # Step 2: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    id: 'Build Docker image'
-    args: ['build', '-t', 'asia-southeast2-docker.pkg.dev/$PROJECT_ID/my-repository/bulletin-board:v1.0', '.']
+    args:
+      - 'build'
+      - '-t'
+      - 'asia-southeast2-docker.pkg.dev/$PROJECT_ID/my-repository/bulletin-board:v1.0'
+      - '.'
 
-
-  # Step 3: Push the Docker image to Artifact Registry
+  # Step 3: Push Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    id: 'Push Docker image'
-    args: ['push', 'asia-southeast2-docker.pkg.dev/$PROJECT_ID/my-repository/bulletin-board:v1.0']
+    args:
+      - 'push'
+      - 'asia-southeast2-docker.pkg.dev/$PROJECT_ID/my-repository/bulletin-board:v1.0'
 
-  # Step 4: Apply the deployment YAML file
+  # Step 4: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
-    id: 'Deploy'
-    args: ['apply', '-f', 'k8s/']
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-asia-southeast2-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=bulletin-board-cluster'
+    args:
+      - 'apply'
+      - '-f'
+      - 'k8s/'
+
+images:
+  - 'asia-southeast2-docker.pkg.dev/$PROJECT_ID/my-repository/bulletin-board:v1.0'
+
 options:
   logging: CLOUD_LOGGING_ONLY
