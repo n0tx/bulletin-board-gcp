@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bulletin-board-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bulletin-board
+  template:
+    metadata:
+      labels:
+        app: bulletin-board
+    spec:
+      containers:
+        - name: bulletin-board-container
+          image: asia-southeast2-docker.pkg.dev/springboot-githubactions-gke/my-repository/bulletin_board:v1.0
+
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/bulletin_board
+            - name: SPRING_DATASOURCE_USERNAME
+              value: springboot
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: springboot
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bulletin-board-service
+spec:
+  selector:
+    app: bulletin-board
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
