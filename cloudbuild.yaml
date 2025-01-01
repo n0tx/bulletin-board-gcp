@@ -23,7 +23,7 @@ steps:
   # Step 4: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-us-central1-c'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=bulletin-board-cluster'
     args:
       - 'apply'
