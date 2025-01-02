@@ -11,26 +11,23 @@ steps:
     args:
       - 'build'
       - '-t'
-      - '$LOCATION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/bulletin-board:$TAG_NAME-$SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:$SHORT_SHA'
       - '.'
 
   # Step 3: Push Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - '$LOCATION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/bulletin-board:$TAG_NAME-$SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:$SHORT_SHA'
 
   # Step 4: Add envsubst
   - name: 'gcr.io/$PROJECT_ID/envsubst'
     env:
       - 'PROJECT_ID=$PROJECT_ID'
-      - 'REPO_NAME=$REPO_NAME'
-      - 'TAG_NAME=$TAG_NAME'
       - 'SHORT_SHA=$SHORT_SHA'
-      - 'LOCATION=$LOCATION'
     args: ['bulletin-board-deployment.yaml']
 
-  # Step 4: Deploy to GKE
+  # Step 5: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
@@ -42,9 +39,3 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-substitutions:
-  _TAG_NAME: v1.0
-  _LOCATION: us-central1
-  _PROJECT_ID: springboot-githubactions-gke
-  _REPO_NAME: bulletin-board-repository
