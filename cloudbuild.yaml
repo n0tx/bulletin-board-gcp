@@ -33,7 +33,7 @@ steps:
   # Step 4: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=$ZONE'
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=$CLUSTER_NAME'
     args:
       - 'apply'
@@ -45,7 +45,6 @@ options:
 
 substitutions:
   _TAG_NAME: v1.0
-  _ZONE: us-central1-c
   _LOCATION: us-central1
   _PROJECT_ID: springboot-githubactions-gke
   _REPO_NAME: bulletin-board-repository
