@@ -25,3 +25,16 @@ spec:
               value: springboot
             - name: SPRING_DATASOURCE_PASSWORD
               value: springboot
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bulletin-board-service
+spec:
+  selector:
+    app: bulletin-board
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
