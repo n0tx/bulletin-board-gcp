@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bulletin-board-container
-          image: us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:$SHORT_SHA
+          image: us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0-$SHORT_SHA
 
           ports:
             - containerPort: 8080

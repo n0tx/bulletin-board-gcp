@@ -11,14 +11,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:$SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0-$SHORT_SHA'
       - '.'
 
   # Step 3: Push Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:$SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0-$SHORT_SHA'
 
   # Step 4: Add envsubst
   - name: 'gcr.io/$PROJECT_ID/envsubst'
