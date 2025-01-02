@@ -11,14 +11,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0'
+      - 'us-central1-docker.pkg.dev/springboot-githubactions-gke/bulletin-board-repository/bulletin-board:v1.0'
       - '.'
 
   # Step 3: Push Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0'
+      - 'us-central1-docker.pkg.dev/springboot-githubactions-gke/bulletin-board-repository/bulletin-board:v1.0'
 
   # Step 4: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -29,9 +29,6 @@ steps:
       - 'apply'
       - '-f'
       - 'k8s/'
-
-images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/bulletin-board-repository/bulletin-board:v1.0'
 
 options:
   logging: CLOUD_LOGGING_ONLY
