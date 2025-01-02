@@ -34,7 +34,7 @@ steps:
   - name: 'gcr.io/cloud-builders/kubectl'
     env:
       - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=$CLUSTER_NAME'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=bulletin-board-cluster'
     args:
       - 'apply'
       - '-f'
@@ -48,4 +48,3 @@ substitutions:
   _LOCATION: us-central1
   _PROJECT_ID: springboot-githubactions-gke
   _REPO_NAME: bulletin-board-repository
-  _CLUSTER_NAME: bulletin-board-cluster
