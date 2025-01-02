@@ -22,13 +22,13 @@ steps:
 
   # Step 4: Add envsubst
   - name: 'gcr.io/$PROJECT_ID/envsubst'
-  env:
-    - 'PROJECT_ID=$PROJECT_ID'
-    - 'REPO_NAME=$REPO_NAME'
-    - 'TAG_NAME=$TAG_NAME'
-    - 'SHORT_SHA=$SHORT_SHA'
-    - 'REGION=$REGION'
-  args: ['bulletin-board-deployment.yaml']
+    env:
+      - 'PROJECT_ID=$PROJECT_ID'
+      - 'REPO_NAME=$REPO_NAME'
+      - 'TAG_NAME=$TAG_NAME'
+      - 'SHORT_SHA=$SHORT_SHA'
+      - 'REGION=$REGION'
+    args: ['bulletin-board-deployment.yaml']
 
   # Step 4: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
